@@ -16,6 +16,7 @@
 #' @param width Size of PDF output.
 #' @param seed Number to use in seeding randomizer. Not applicable with choice data.
 #' @param gid_size Number of characters in hashcodes for the game IDs.
+#' @param condition Condition for DieTryinSR (one of "anonymous", "revealed", "optin")
 #' @return A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 
 #'  filled with CSV files that will be used to record survey results.
 #' @export
@@ -28,7 +29,7 @@
 subset_survey_compiler_partner_choice = function(path, pattern = ".jpg", token_color="navyblue", 
                                                  set_size=4, height=8.5, width=11, seed=123, 
                                                  gid_size=4, game_name="Choice",
-                                                 RID="CR", day=1, month=3, year=2023){
+                                                 RID="CR", day=1, month=3, year=2023, condition = "anonymous"){
     # Set random number generator seed to make repeatable game IDS
       if(!is.na(seed)){
        set.seed(seed)
@@ -97,7 +98,7 @@ subset_survey_compiler_partner_choice = function(path, pattern = ".jpg", token_c
 
         ###### Now Build csv
          Full_N = 8
-         header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID"), c(c('',RID,day,month,year,''), PID, game_name , '', seed, GID))
+         header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID", "Condition"), c(c('',RID,day,month,year,''), PID, game_name , '', seed, GID, condition))
          header2 = cbind(c(paste0("Offer", c(1:(Full_N+1))),paste0("AID", c(1:(Full_N+1)))), c(rep('', Full_N +1),IDs,rep("BLANK",Full_N-set_size)))
 
          output = rbind(header,header2) 

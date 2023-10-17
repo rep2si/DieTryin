@@ -18,6 +18,7 @@
 #' @param full_alter_set Include all alters on roster, or only those who played first round of game?
 #' @param gid_size Number of characters in hashcodes for the game IDs.
 #' @param max_iter Max time to search for legal permutations.
+#' @param condition Condition for DieTryinSR (one of "anonymous", "revealed", "optin")
 #' @return A file folder, SubsetSurveys, full of PDFs of subset-surveys to run, and a second folder,
 #'  SubsetContributions, full of CSV files to store results.
 #' @export
@@ -31,7 +32,7 @@
 subset_survey_compiler_random = function(path, pattern = ".jpg", token_color="navyblue", 
                                          set_size=4, height=8.5, width=11, seed=123, full_alter_set = TRUE, 
                                          max_iter=10000, gid_size=4, game_name="Random",
-                                         RID="CR", day=1, month=3, year=2023){
+                                         RID="CR", day=1, month=3, year=2023, condition = "anonymous"){
     # Set random number generator seed to make repeatable game IDS
       if(!is.na(seed)){
        set.seed(seed)
@@ -127,7 +128,7 @@ subset_survey_compiler_random = function(path, pattern = ".jpg", token_color="na
 
        ######## Build csv
          Full_N = 8
-         header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID"), c(c('',RID,day,month,year,''), legal_set[i,1], game_name , '', seed, GID))
+         header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID", "Condition"), c(c('',RID,day,month,year,''), legal_set[i,1], game_name , '', seed, GID, condition))
          header2 = cbind(c(paste0("Offer", c(1:(Full_N+1))),paste0("AID", c(1:(Full_N+1)))), c(rep('', Full_N +1),legal_set[i,],rep("BLANK",Full_N-set_size)))
 
          output = rbind(header,header2) 

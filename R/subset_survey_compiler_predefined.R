@@ -15,6 +15,7 @@
 #' @param width Size of PDF output.
 #' @param seed Number to use in RNG.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
+#' @param condition Condition for DieTryinSR (one of "anonymous", "revealed", "optin")
 #' @return A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 
 #'  filled with CSV files that will be used to record survey results.
 #' @export
@@ -22,7 +23,7 @@
 subset_survey_compiler_predefined = function(path, pid=NULL, id_set=NULL, pattern = ".jpg",  
                                          height=8.5, width=11, seed=123, 
                                          gid_size=4, game_name="Predefined",
-                                         RID="CR", day=1, month=3, year=2023){
+                                         RID="CR", day=1, month=3, year=2023, condition = "anonymous"){
     # Set random number generator seed to make repeatable game IDS
       if(!is.na(seed)){
        set.seed(seed)
@@ -84,7 +85,7 @@ subset_survey_compiler_predefined = function(path, pid=NULL, id_set=NULL, patter
 
        ######## Build csv
         Full_N = 8 
-        header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID"), c(rep(NA, 6), PID, game_name, NA, seed, GID))
+        header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID", "Condition"), c(rep(NA, 6), PID, game_name, NA, seed, GID, condition))
         header2 = cbind(c(paste0("Offer", c(1:(Full_N+1))),paste0("AID", c(1:(Full_N+1)))), c(rep("", Full_N +1),IDs,rep("BLANK",Full_N-set_size)))
 
         output = rbind(header,header2) 

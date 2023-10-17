@@ -28,6 +28,10 @@
 #' @param gid_size Number of characters in hashcodes for the game IDs.
 #' @param max_iter Max time to search for full-scope legal permutations. In random mode, we seek to ensure that each
 #'  alter appears in exactly the same number of games. Thus, we iterate randomizations until we find such a set. 
+#' @param condition Used to control the condition in DieTryinSR (android app).
+#' If "optin", the player is offered the option to opt in or out of making an allocation.
+#' If "anonymous", the player makes the allocation anonymously, i.e., their identity will not be revealed to receiver.
+#' If "forced", the player's identity will be revealed to the receiver.
 #' @return A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 
 #'  filled with CSV files that will be used to record survey results.
 #' @export
@@ -42,13 +46,13 @@
 build_subset_surveys = function (path, pid=NULL, id_set=NULL, game_name="Choice", entry_type="random", set_size=4, 
                                     pattern = ".jpg", token_color="navyblue",  max_iter=10000, full_alter_set = TRUE,
                                     height=8.5, width=11, seed=NA, gid_size=4,
-                                    RID="CR", day=1, month=3, year=2023){
+                                    RID="CR", day=1, month=3, year=2023, condition = "anonymous"){
 
   ################################################################## Build Selection
   if(entry_type=="choice"){
    subset_survey_compiler_partner_choice(path=path, token_color=token_color, game_name=game_name, set_size=set_size, 
                                          height=height, width=width, pattern = pattern, seed=seed, gid_size=gid_size,
-                                         RID=RID, day=day, month=month, year=year)
+                                         RID=RID, day=day, month=month, year=year, condition = condition)
    }
  
   ################################################################## Build Random
@@ -56,14 +60,14 @@ build_subset_surveys = function (path, pid=NULL, id_set=NULL, game_name="Choice"
    subset_survey_compiler_random(path=path, token_color=token_color, game_name=game_name, max_iter=max_iter, set_size=set_size, 
                                  full_alter_set = full_alter_set, height=height, width=width, pattern = pattern, seed=seed, 
                                  gid_size=gid_size,
-                                 RID=RID, day=day, month=month, year=year)     
+                                 RID=RID, day=day, month=month, year=year, condition = condition)
    }
 
   ################################################################## Build Selection
   else if(entry_type=="predefined"){
    subset_survey_compiler_predefined(path=path, pid = pid, id_set = id_set, game_name=game_name,  
                                      height=height, width=width, pattern = pattern, seed=seed, gid_size=gid_size,
-                                     RID=RID, day=day, month=month, year=year)
+                                     RID=RID, day=day, month=month, year=year, condition = condition)
   }
 
   ##### Otherwise return error
