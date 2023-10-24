@@ -26,6 +26,8 @@ setup_folders = function(path=path, add=NULL){
 
   dir.create(file.path(paste0(path,"/","RICH"),"SubsetContributions"))
   dir.create(file.path(paste0(path,"/","RICH/SubsetContributions"),"GIDsByPID"))
+  dir.create(file.path(paste0(path,"/","RICH"),"SubsetPayouts"))
+  dir.create(file.path(paste0(path,"/","RICH/SubsetPayouts"),"GIDsByPID"))
   dir.create(file.path(paste0(path,"/","RICH"),"SubsetSurveys"))
   dir.create(file.path(paste0(path,"/","RICH"),"SubsetData"))
   
