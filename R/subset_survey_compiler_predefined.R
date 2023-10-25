@@ -15,7 +15,9 @@
 #' @param width Size of PDF output.
 #' @param seed Number to use in RNG.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
-#' @param condition Condition for DieTryinSR (one of "anonymous", "revealed", "optin")
+#' @param condition Condition for DieTryinSR in enhanced mode (one of "anonymous", "revealed", "optin")
+#' @param endowment Endowment for DieTryinSR in enahnced mode. 
+#' @param opt_out_keep Amount kept when opting out for DieTryinSR in enhanced mode.
 #' @return A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 
 #'  filled with CSV files that will be used to record survey results.
 #' @export
@@ -23,7 +25,7 @@
 subset_survey_compiler_predefined = function(path, pid=NULL, id_set=NULL, pattern = ".jpg",  
                                          height=8.5, width=11, seed=123, 
                                          gid_size=4, game_name="Predefined",
-                                         RID="CR", day=1, month=3, year=2023, condition = "anonymous"){
+                                         RID="CR", day=1, month=3, year=2023, condition = "anonymous", endowment = 200, opt_out_keep = NA){
     # Set random number generator seed to make repeatable game IDS
       if(!is.na(seed)){
        set.seed(seed)
@@ -85,7 +87,7 @@ subset_survey_compiler_predefined = function(path, pid=NULL, id_set=NULL, patter
 
        ######## Build csv
         Full_N = 8 
-        header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID", "Condition"), c(rep(NA, 6), PID, game_name, NA, seed, GID, condition))
+        header = cbind(c("HHID", "RID", "Day", "Month", "Year", "Name", "ID", "Game", "Order", "Seed", "GID", "Condition", "Endowment", "OptOutKeep"), c(rep(NA, 6), PID, game_name, NA, seed, GID, condition, endowment, opt_out_keep))
         header2 = cbind(c(paste0("Offer", c(1:(Full_N+1))),paste0("AID", c(1:(Full_N+1)))), c(rep("", Full_N +1),IDs,rep("BLANK",Full_N-set_size)))
 
         output = rbind(header,header2) 
