@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal") {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts") {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -83,10 +83,10 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal") {
                                 write(billy, paste0(path, "/SubsetContributions/GIDsByPID/", all_ids[i], ".json"))
                         }
                 }
-        } else if (what == "payouts") {
+        } else if (what == "other") {
 
           # I can't be bothered to parse Cody's code, so I'm doing this from scratch.
-          all_ds <- list.files(paste0(path, "/SubsetPayouts/"), pattern = ".csv", full.names = TRUE)
+          all_ds <- list.files(paste0(path, "/", subdir, "/"), pattern = ".csv", full.names = TRUE)
 
           all_gids <- vector("list", length(all_ds))
           
@@ -103,11 +103,16 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal") {
 
           all_ids <- unique(d_gids[, 1])
 
+          gid_dir <- paste0(path, "/", subdir, "/GIDsByPID")
+          if (!dir.exists(gid_dir)) {
+              dir.create(gid_dir)
+          }
+
           for (i in seq_len(length(all_ids))) {
             id <- all_ids[i]
             gids <- d_gids[d_gids$id == id, 2]
             Ngames <- length(gids)
-            filename <- paste0(path, "/SubsetPayouts/GIDsByPID/", id, ".json")
+            filename <- paste0(path, "/", subdir, "/GIDsByPID/", id, ".json")
             content <- paste0("{'Ngames':'",Ngames,"'")
             for (j in seq_len(Ngames)) {
               content <- paste0(content, ",'GIDx", j, "':'", gids[j],"'")
