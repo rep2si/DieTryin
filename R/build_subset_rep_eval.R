@@ -15,18 +15,19 @@ build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid 
 
   GID  = toupper(random_string(1, gid_size))
 
+  n <- length(questions)
+
   ## Build csv
   output = cbind(
-    c("RID", "TimeStamp", "ID", "GID", "AID"),
-    c(NA, NA, pid, GID, aid)
+    c("RID", "TimeStamp", "ID", "GID", "AID", "Nquestions"),
+    c(NA, NA, pid, GID, aid, n)
   )
 
-  n <- length(questions)
   
   # add one entry per question
   ans <- cbind(
     paste0("q", seq_len(n)),
-    rep(NA, n)
+    rep("", n)
   )
 
   # add question text (needed in app)
