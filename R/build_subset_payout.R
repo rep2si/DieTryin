@@ -18,8 +18,8 @@ build_subset_payout <- function (path, pid = NULL, aid = NULL, offer = NA, seed 
 
   ## Build csv
   output = cbind(
-    c("RID", "TimeStamp", "ID", "GID", "AID", "Expected", "Given"),
-    c(NA, NA, pid, GID, aid, "", offer)
+    c("RID", "ID", "GID", "AID", "Expected", "Given", "loadTime", "saveTime"),
+    c(NA,    pid,   GID,   aid,  "",         offer,    NA,         NA)
   )
   colnames(output) = c("Variable", "Data")
   write.csv(output, paste0(path, "/SubsetPayouts/", GID, ".csv"), row.names = FALSE)

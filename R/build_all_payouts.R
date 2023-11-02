@@ -5,7 +5,7 @@
 #' @param path Path to RICH folder.
 #' @param keep_anonymous Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.
 
-build_all_payouts <- function(path, keep_anonymous = FALSE) {
+build_all_payouts <- function(path, keep_anonymous = TRUE, keep_optin = TRUE) {
   res_file <- paste0(path, "/Results/SubsetContributions-SummaryTable.csv")
 
   if (!file.exists(res_file)) {
@@ -16,6 +16,10 @@ build_all_payouts <- function(path, keep_anonymous = FALSE) {
 
   if (!keep_anonymous) {
     res <- res[res$Condition != "anonymous", ]
+  }
+
+  if (!keep_anonymous) {
+    res <- res[res$Condition != "optin", ]
   }
 
   for (r in seq_len(dim(res)[1])) {
