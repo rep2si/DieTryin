@@ -110,7 +110,9 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
 
           for (i in seq_len(length(all_ids))) {
             id <- all_ids[i]
-            gids <- d_gids[d_gids$id == id, 2]
+            gids <- d_gids[d_gids$id == id, 2] 
+            gids <- sample(gids) # randomise the order of others
+            # should be able to sort by condition here, for allocations
             Ngames <- length(gids)
             filename <- paste0(path, "/", subdir, "/GIDsByPID/", id, ".json")
             content <- paste0("{'Ngames':'",Ngames,"'")
