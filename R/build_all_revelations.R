@@ -5,7 +5,7 @@
 #' @param path Path to RICH folder.
 #' @param keep_anonymous Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.
 
-build_all_payouts <- function(path, keep_anonymous = TRUE, keep_optin = TRUE) {
+build_all_revelations <- function(path, remove_optouts = TRUE) {
   res_file <- paste0(path, "/Results/SubsetContributions-SummaryTable.csv")
 
   if (!file.exists(res_file)) {
@@ -14,18 +14,22 @@ build_all_payouts <- function(path, keep_anonymous = TRUE, keep_optin = TRUE) {
 
   res <- read.csv(res_file)
 
-  if (!keep_anonymous) {
-    res <- res[res$Condition != "anonymous", ]
-  }
 
-  if (!keep_anonymous) {
-    res <- res[res$Condition != "optin", ]
+  if (remove_optouts) {
+    res <- res[is.na(res$optedOut) | res$optedOut != "true", ]
   }
+  
+  # Create dir if necessary
+  dir <- paste0(path, "/SubsetRevelations")
 
-  for (r in seq_len(dim(res)[1])) {
-    receiver <- res[r, "AID2"]
+  if (!dir.exists(dir)) {
+    dir.create(dir)
+    }
+
+  for (r in seq_len(nrow(res))) {
+    receiver <- res[r, "AID"]
     giver <- res[r, "ID"]
-    amount_offered <- res[r, "Offer2"]
-    build_subset_payout(path = path, pid = receiver, aid = giver, offer = amount_offered)
+    amount_offered <- res[r, "amtGiven"]
+    build_subset_expectation(path = path, subdir = "SubsetRevelations", pid = receiver, aid = giver, offer = amount_offered)
   }
 }
