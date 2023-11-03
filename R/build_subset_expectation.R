@@ -7,7 +7,7 @@
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 
-build_subset_payout <- function (path, pid = NULL, aid = NULL, offer = NA, seed = 123, gid_size = 4) {
+build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, seed = 123, gid_size = 4) {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -16,13 +16,20 @@ build_subset_payout <- function (path, pid = NULL, aid = NULL, offer = NA, seed 
 
   GID  = toupper(random_string(1, gid_size))
 
+  # Create dir if necessary
+  dir <- paste0(path, "/", subdir)
+
+  if (!dir.exists(dir)) {
+    dir.create(dir)
+    }
+
   ## Build csv
   output = cbind(
     c("RID", "ID", "GID", "AID", "Expected", "Given", "loadTime", "saveTime"),
     c(NA,    pid,   GID,   aid,  "",         offer,    NA,         NA)
   )
   colnames(output) = c("Variable", "Data")
-  write.csv(output, paste0(path, "/SubsetPayouts/", GID, ".csv"), row.names = FALSE)
+  write.csv(output, paste0(path, "/", subdir , "/", GID, ".csv"), row.names = FALSE)
 
   ## And parse to JSON
   LB = length(output[,1])
@@ -33,7 +40,7 @@ build_subset_payout <- function (path, pid = NULL, aid = NULL, offer = NA, seed 
   billy = paste0(billy, paste0("'",output[LB,1],"':'", output[LB,2],"'"))
   billy = paste0("{",billy,"}")
 
-  write(billy, paste0(path, "/SubsetPayouts/", GID,".json"))
+  write(billy, paste0(path, "/", subdir , "/",  GID,".json"))
 
 }
 
