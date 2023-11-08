@@ -10,12 +10,12 @@
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 
-build_subset_payout <- function (path, subdir = "SubsetPayouts", pid = NULL, kept = 0, received = 0) {
+build_subset_payout <- function (path, subdir = "SubsetPayouts", pid = NULL, amt_kept = 0, amt_received = 0, n_kept = 0, n_received = 0, guess_margin = 0, guess_payout_amt = 0 ) {
 
   ## Build csv
   output = cbind(
-    c("RID", "ID", "amtKept", "amtReceived", "loadTime", "saveTime" ),
-    c("",    pid,  kept,      received,      "",         ""         )
+    c("RID", "ID", "amtKept", "amtReceived", "nKept",  "nReceived", "guessMargin", "guessPayout",     "loadTime", "saveTime" ),
+    c("",    pid,  amt_kept,  amt_received,  n_kept,   n_received,  guess_margin,   guess_payout_amt, "",         ""         )
   )
 
   # Write csv (creating directory if necessary)

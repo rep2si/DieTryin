@@ -13,9 +13,15 @@
 #' @param n_alloc_receive Number of 'incoming' allocations to select:
 #' will implement the amount 'give' to the player. If there are fewer
 #' allocations than this number, implement the closest possible figure.
+#' @param guess_margin the margin within which an expected allocation
+#' will be rewarded. E.g. set to 10 to reward all guesses within ±10
+#' of actual allocation.
+#' @param guess_payout_amt The amount given per correct guess.
 
 build_all_random_payouts <- function(path, n_alloc_keep = 1,
-                                     n_alloc_receive = 1) {
+                                     n_alloc_receive = 1,
+                                     guess_margin = 0,
+                                     guess_payout_amt = 0) {
 
   res_file <- paste0(
     path,
@@ -39,29 +45,33 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
     # sample allocations kept
     allocs_kept <- results[results$ID == p, "amtKept"]
     n_max <- length(allocs_kept)
-    n_sample <- ifelse(n_max > n_alloc_keep, n_alloc_keep, n_max)
-    keep_these <- sample(allocs_kept, size = n_sample)
+    n_sampled_keep <- ifelse(n_max > n_alloc_keep, n_alloc_keep, n_max)
+    keep_these <- sample(allocs_kept, size = n_sampled_keep)
     # sample allocations received 
     allocs_received <- results[results$AID == p, "amtGiven"] # note AID!
     n_max <- length(allocs_received)
-    n_sample <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
-    receive_these <- sample(allocs_received, size = n_sample)
+    n_sampled_received <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
+    receive_these <- sample(allocs_received, size = n_sampled_received)
     tot_kept = sum(keep_these)
     tot_received = sum(receive_these)
 
-    build_subset_payout(path     = path,
-                        pid      = p,
-                        kept     = tot_kept,
-                        received = tot_received)
+    build_subset_payout(path             = path,
+                        pid              = p,
+                        amt_kept         = tot_kept,
+                        amt_received     = tot_received,
+                        n_kept           = n_sampled_keep,
+                        n_received       = n_sampled_received,
+                        guess_margin     = guess_margin,
+                        guess_payout_amt = guess_payout_amt
+                        )
 
-    d_payouts <- data.frame(
-        id = p,
-        kept = tot_kept,
-        received = tot_received
-      )
-    return(d_payouts)
-  })
+  ## In case we want to export a df with all the planned payouts.
+  #   d_payouts <- data.frame(
+  #       id = p,
+  #       kept = tot_kept,
+  #       received = tot_received
+  #     )
+  #   return(d_payouts)
+   })
 
-
-  # Do we want to save this somewhere?
 }
