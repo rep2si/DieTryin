@@ -7,7 +7,7 @@
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 
-build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, seed = 123, gid_size = 4) {
+build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, anonymous = FALSE, seed = 123, gid_size = 4) {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -23,10 +23,12 @@ build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid =
     dir.create(dir)
     }
 
+  anon_string <- ifelse(anonymous, "true", "false")
+
   ## Build csv
   output = cbind(
-    c("RID", "ID", "GID", "AID", "Expected", "Given", "loadTime", "saveTime"),
-    c(NA,    pid,   GID,   aid,  "",         offer,    NA,         NA)
+    c("RID", "ID", "GID", "AID", "Expected", "Given", "anonymous", "loadTime", "saveTime"),
+    c(NA,    pid,   GID,   aid,  "",         offer,   anon_string,   NA,         NA)
   )
   colnames(output) = c("Variable", "Data")
   write.csv(output, paste0(path, "/", subdir , "/", GID, ".csv"), row.names = FALSE)
