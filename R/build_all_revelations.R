@@ -30,6 +30,7 @@ build_all_revelations <- function(path, remove_optouts = TRUE) {
     receiver <- res[r, "AID"]
     giver <- res[r, "ID"]
     amount_offered <- res[r, "amtGiven"]
-    build_subset_expectation(path = path, subdir = "SubsetRevelations", pid = receiver, aid = giver, offer = amount_offered)
+    anonymous <- ifelse(res[r, "Condition"] == "anonymous", TRUE, FALSE)
+    build_subset_expectation(path = path, subdir = "SubsetRevelations", pid = receiver, aid = giver, offer = amount_offered, anonymous = anonymous)
   }
 }
