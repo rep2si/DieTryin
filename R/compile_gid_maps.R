@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts") {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_order = NA) {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -95,24 +95,35 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             game <- read.csv(all_ds[i])
             id <- game[which(game[, 1] %in% "ID"), 2]
             gid <- game[which(game[, 1] %in% "GID"), 2]
-            all_gids[[i]] <- data.frame(id, gid)
+            if (!sort_by == FALSE) {
+                    sorter <- game[which(game[, 1] %in% sort_by), 2]
+                    all_gids[[i]] <- data.frame(id, gid, sorter)
+            } else {
+                    all_gids[[i]] <- data.frame(id, gid)
+            }
           }
 
           # crunch me good
           d_gids <- do.call("rbind", all_gids)
-
-          all_ids <- unique(d_gids[, 1])
 
           gid_dir <- paste0(path, "/", subdir, "/GIDsByPID")
           if (!dir.exists(gid_dir)) {
               dir.create(gid_dir)
           }
 
-          for (i in seq_len(length(all_ids))) {
+          all_ids <- unique(d_gids[, 1])
+
+          for (i in seq_along(all_ids)) {
             id <- all_ids[i]
-            gids <- d_gids[d_gids$id == id, 2] 
-            gids <- sample(gids) # randomise the order of others
-            # should be able to sort by condition here, for allocations
+            d <- d_gids[d_gids$id == id, ] 
+            # first randomise order completely
+            d <- d[sample(nrow(d)),]
+            # then sort by sorter
+            if (!sort_by == FALSE) {
+              d$sorter <- ordered(d$sorter, levels = sort_order) # make ordered factor
+              d <- d[order(d$sorter), ] # sort
+            }
+            gids <- d[, 2] 
             Ngames <- length(gids)
             filename <- paste0(path, "/", subdir, "/GIDsByPID/", id, ".json")
             content <- paste0("{'Ngames':'",Ngames,"'")
@@ -122,6 +133,5 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             content <- paste0(content,"}")
             write(content, filename)
           }
-
         }
 }
