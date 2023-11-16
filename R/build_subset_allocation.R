@@ -6,7 +6,7 @@
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 
-build_subset_allocation <- function (path, subdir = "SubsetContributions", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, condition = "", endowment = 100, opt_out_keep = 0) {
+build_subset_allocation <- function (path, subdir = "SubsetContributions", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, condition = "", endowment = 100, opt_out_keep = 0, ask_opt_out = FALSE) {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -16,9 +16,11 @@ build_subset_allocation <- function (path, subdir = "SubsetContributions", pid =
   GID  = toupper(random_string(1, gid_size))
 
   ## Build csv
+  ask_string <- ifelse(ask_opt_out, "true", "false")
+  
   output = cbind(
-    c("RID", "ID", "GID", "AID", "Condition", "Endowment", "amtKept", "amtGiven", "loadTime", "saveTime", "optedOut", "optOutKeep"),
-    c("",    pid,  GID,   aid,   condition,   endowment,   "",        "",       "",          "",         NA,        opt_out_keep)
+    c("RID", "ID", "GID", "AID", "Condition", "Endowment", "amtKept", "amtGiven", "loadTime", "saveTime", "optedOut", "optOutKeep", "askOptOut"),
+    c("",    pid,  GID,   aid,   condition,   endowment,   "",        "",       "",          "",         NA,        opt_out_keep  , ask_string)
   )
 
   # Write csv (creating directory if necessary)
