@@ -3,6 +3,7 @@
 #'
 #' @param path Path to RICH folder.
 #' @param format Is the data saved as csv or json?
+#' @param what What to compile. "SubsetContributions" by default.
 #' @return A CSV of compiled contribution records will be added to the Results folder.
 #' @export
 #' @examples
@@ -11,7 +12,7 @@
 #' }
 #'
 
-compile_subset_survey_data = function(path=path, format="json"){
+compile_subset_survey_data = function(path=path, format="json", what = "SubsetContributions"){
 #####################
   if(format=="csv"){
     files = list.files(path=paste0(path,"/","SubsetContributions/"), pattern="*.csv")
@@ -42,11 +43,11 @@ compile_subset_survey_data = function(path=path, format="json"){
 
 #####################
   if(format=="json"){
-    files = list.files(path=paste0(path,"/","SubsetContributions/"), pattern="*.json")
+    files = list.files(path=paste0(path,"/", what, "/"), pattern="*.json")
     Basic = vector("list",length(files))
                               
  for(i in 1:length(files)){ 
-  bob = readLines(paste0(path,"/","SubsetContributions","/",files[i]))       
+  bob = readLines(paste0(path,"/", what, "/",files[i]))       
   Basic[[i]] = matrix(jsonlite::fromJSON(gsub("'", '"', bob)))
    }
 
@@ -58,7 +59,7 @@ compile_subset_survey_data = function(path=path, format="json"){
    Data[i,] = unlist(Basic[[i]])
    }                         
  
- write.csv(Data, file=paste0(path,"/","Results/","SubsetContributions","-SummaryTable.csv"),row.names = FALSE)
+ write.csv(Data, file=paste0(path,"/","Results/", what,"-SummaryTable.csv"),row.names = FALSE)
  }
 
 
