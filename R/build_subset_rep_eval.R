@@ -38,13 +38,18 @@ build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid 
   )
 
   # add question text (needed in app)
-
   text <- cbind(
     paste0("text", seq_len(n)),
     questions
   )
+
+  # add save and loadtimes
+  time_stamps <- cbind(
+          c(paste0("loadTime", seq_len(n)), paste0("saveTime", seq_len(n))),
+          rep("", 2 * n)
+  )
   
-  output = rbind(output, ll, ans, text)
+  output = rbind(output, ll, ans, text, time_stamps)
 
   # Write csv (creating directory if necessary)
   dir <- paste0(path, "/", subdir)
