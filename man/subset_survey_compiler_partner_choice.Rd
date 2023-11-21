@@ -17,7 +17,8 @@ subset_survey_compiler_partner_choice(
   RID = "CR",
   day = 1,
   month = 3,
-  year = 2023
+  year = 2023,
+  condition = "anonymous"
 )
 }
 \arguments{
@@ -47,6 +48,8 @@ to indiciate a tie: e.g., "1"}
 \item{month}{Month of interview.}
 
 \item{year}{Year of interview.}
+
+\item{condition}{Condition for DieTryinSR (one of "anonymous", "revealed", "optin")}
 }
 \value{
 A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 

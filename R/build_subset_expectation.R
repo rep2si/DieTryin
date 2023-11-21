@@ -6,6 +6,7 @@
 #' @param offer Offer that was made by giver to receiver.
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
+#' @export
 
 build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, anonymous = FALSE, seed = 123, gid_size = 4) {
 

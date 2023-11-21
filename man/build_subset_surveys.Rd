@@ -22,7 +22,10 @@ build_subset_surveys(
   RID = "CR",
   day = 1,
   month = 3,
-  year = 2023
+  year = 2023,
+  condition = "anonymous",
+  endowment = 200,
+  opt_out_keep = NA
 )
 }
 \arguments{
@@ -69,6 +72,15 @@ alter appears in exactly the same number of games. Thus, we iterate randomizatio
 \item{month}{Month of interview.}
 
 \item{year}{Year of interview.}
+
+\item{condition}{Used to control the condition in DieTryinSR (android app).
+If "optin", the player is offered the option to opt in or out of making an allocation.
+If "anonymous", the player makes the allocation anonymously, i.e., their identity will not be revealed to receiver.
+If "forced", the player's identity will be revealed to the receiver.}
+
+\item{endowment}{Endowment for DieTryinSR in enahnced mode. Only compatible with entry_type = predefined.}
+
+\item{opt_out_keep}{Amount kept when opting out for DieTryinSR in enhanced mode. Only compatible with entry_type = predefined.}
 }
 \value{
 A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 

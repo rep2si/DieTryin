@@ -5,6 +5,7 @@
 #' @param aid ID of alter (about whom reputational eval is being made)
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
+#' @export
 
 build_subset_allocation <- function (path, subdir = "SubsetContributions", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, condition = "", endowment = 100, opt_out_keep = 0, ask_opt_out = FALSE) {
 

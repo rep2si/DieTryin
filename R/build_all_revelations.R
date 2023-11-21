@@ -4,6 +4,7 @@
 #'
 #' @param path Path to RICH folder.
 #' @param keep_anonymous Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.
+#' @export
 
 build_all_revelations <- function(path, remove_optouts = TRUE) {
   res_file <- paste0(path, "/Results/SubsetContributions-SummaryTable.csv")

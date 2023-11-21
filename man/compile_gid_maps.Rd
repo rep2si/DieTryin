@@ -4,13 +4,22 @@
 \alias{compile_gid_maps}
 \title{Build a map between GIDs and PIDs}
 \usage{
-compile_gid_maps(path, mode = "onlyfocal")
+compile_gid_maps(
+  path,
+  what = "contributions",
+  mode = "onlyfocal",
+  subdir = "SubsetPayouts",
+  sort_by = FALSE,
+  sort_order = NA
+)
 }
 \arguments{
 \item{path}{Path to RICH folder.}
 
-\item{mode}{For games like the PGG or SnowDrift, where the focal persons can either give or not, set to "onlyfocal". For games were the focal
+\item{what}{What to compile gid_maps for. Only useful for "enhanced" moded. Set to "contributions" to compile files in "SubsetContributions" folder (e.g. when using og mode, or for collecting giver data in enhanced mode). Set to "payouts" to compile files in the "SubsetPayouts" folder (when collecting payout data in enhanced mode).
 can give to anyone on the roster, set to "fullset".}
+
+\item{mode}{For games like the PGG or SnowDrift, where the focal persons can either give or not, set to "onlyfocal". For games were the focal}
 }
 \description{
 This is a small helper function to create suveys JSON files that guide the app behavior.

@@ -5,6 +5,7 @@
 #' @param aid ID of alter (about whom reputational eval is being made)
 #' @param seed Number to use in seeding the randomization process if used.
 #' @param gid_size Number of terms in hashcodes for the game IDs.
+#' @export
 
 build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, questions = c("question1", "question2", "question3"), likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"), dont_know_text = "dunno") {
 

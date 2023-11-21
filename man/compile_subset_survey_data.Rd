@@ -5,12 +5,18 @@
 \title{A function to compile individual CSVs in the SubsetContributions folder into a flat database.
 Used to create a database after each individual record is entered.}
 \usage{
-compile_subset_survey_data(path = path, format = "json")
+compile_subset_survey_data(
+  path = path,
+  format = "json",
+  what = "SubsetContributions"
+)
 }
 \arguments{
 \item{path}{Path to RICH folder.}
 
 \item{format}{Is the data saved as csv or json?}
+
+\item{what}{What to compile. "SubsetContributions" by default.}
 }
 \value{
 A CSV of compiled contribution records will be added to the Results folder.

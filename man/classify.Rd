@@ -39,7 +39,8 @@ classify(
   alert_mode = "off",
   automate = TRUE,
   d_x = 20,
-  d_y = 20
+  d_y = 20,
+  plot_corners = TRUE
 )
 }
 \arguments{

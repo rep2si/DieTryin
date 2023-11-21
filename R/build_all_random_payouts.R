@@ -17,6 +17,7 @@
 #' will be rewarded. E.g. set to 10 to reward all guesses within ±10
 #' of actual allocation.
 #' @param guess_payout_amt The amount given per correct guess.
+#' @export
 
 build_all_random_payouts <- function(path, n_alloc_keep = 1,
                                      n_alloc_receive = 1,

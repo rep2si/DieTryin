@@ -9,6 +9,7 @@ compile_android_settings(
   photoMode = "onlyfocal",
   entryMode = "permanent",
   photoNumber = "twolines",
+  gameMode = "enhanced",
   quietMode = "fifty"
 )
 }
@@ -21,6 +22,8 @@ can give to anyone on the roster, set to "fullset".}
 \item{entryMode}{Set to "permanent" so that data cant be changed once saved. Set to "temporary" if saved data are allowed to be overwritten.}
 
 \item{photoNumber}{The app allows up to 9 total targets when set to "threelines", and 6 targets when set to "twolines". Three people per line.}
+
+\item{gameMode}{Used to determine the mode in which DieTryinSR launches. Set to "og" for the classic layout, similar to generated pdfs. Set to "enhanced" to use interactive dictator game mode, with additional game conditions.}
 
 \item{quietMode}{Set to "fifty" for some inspirational 50 cents quotes on start-up. Set to "dull" if you wanna be boring.}
 }

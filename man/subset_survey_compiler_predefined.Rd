@@ -17,7 +17,10 @@ subset_survey_compiler_predefined(
   RID = "CR",
   day = 1,
   month = 3,
-  year = 2023
+  year = 2023,
+  condition = "anonymous",
+  endowment = 200,
+  opt_out_keep = NA
 )
 }
 \arguments{
@@ -46,6 +49,12 @@ subset_survey_compiler_predefined(
 \item{month}{Month of interview.}
 
 \item{year}{Year of interview.}
+
+\item{condition}{Condition for DieTryinSR in enhanced mode (one of "anonymous", "revealed", "optin")}
+
+\item{endowment}{Endowment for DieTryinSR in enahnced mode.}
+
+\item{opt_out_keep}{Amount kept when opting out for DieTryinSR in enhanced mode.}
 }
 \value{
 A file folder, SubsetSurveys, filled with PDFs of sub-surveys to run, and a second folder, SubsetContributions, 

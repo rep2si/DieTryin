@@ -13,7 +13,8 @@ pre_process(
   automate = FALSE,
   reference = NULL,
   d_x = 20,
-  d_y = 20
+  d_y = 20,
+  plot_corners = TRUE
 )
 }
 \arguments{

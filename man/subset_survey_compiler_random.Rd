@@ -19,7 +19,8 @@ subset_survey_compiler_random(
   RID = "CR",
   day = 1,
   month = 3,
-  year = 2023
+  year = 2023,
+  condition = "anonymous"
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ to indiciate a tie: e.g., "1"}
 \item{month}{Month of interview.}
 
 \item{year}{Year of interview.}
+
+\item{condition}{Condition for DieTryinSR (one of "anonymous", "revealed", "optin")}
 }
 \value{
 A file folder, SubsetSurveys, full of PDFs of subset-surveys to run, and a second folder,
