@@ -1,0 +1,20 @@
+{
+  "give": "You give:",
+  "keep": "You keep:",
+  "optIn": "Opt in",
+  "optOut": "Opt out",
+  "expect": "You expect:",
+  "received": "You were given:",
+  "giveHint": "amount",
+  "expectHint": "expected amount",
+  "inEdgesPayout": "Incoming allocations implemented",
+  "outEdgesPayout": "Outoing allocations implemented",
+  "accuracyTested": "Expectations tested for accuracy",
+  "accurateExpectations": "Accurate Expectations",
+  "totalReceived": "Total received",
+  "totalKept": "Total kept",
+  "totalAccurateExpectations": "Total for accurate expectations",
+  "grandTotal": "Grand total",
+  "accuracyMarginReminder": "Guesses within the following margin are consindered accurate:",
+  "accuracyRewardReminder": "Each accurate guess is paid:"
+}
