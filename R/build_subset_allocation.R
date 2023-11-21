@@ -20,7 +20,7 @@ build_subset_allocation <- function (path, subdir = "SubsetContributions", pid =
   
   output = cbind(
     c("RID", "ID", "GID", "AID", "Condition", "Endowment", "amtKept", "amtGiven", "loadTime", "saveTime", "optedOut", "optOutKeep", "askOptOut"),
-    c("",    pid,  GID,   aid,   condition,   endowment,   "",        "",       "",          "",         NA,        opt_out_keep  , ask_string)
+    c("",    pid,  GID,   aid,   condition,   endowment,   "",        "",       "",          "",         "",        opt_out_keep  , ask_string)
   )
 
   # Write csv (creating directory if necessary)

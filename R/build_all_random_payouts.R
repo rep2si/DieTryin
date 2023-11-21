@@ -48,7 +48,7 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
     n_sampled_keep <- ifelse(n_max > n_alloc_keep, n_alloc_keep, n_max)
     keep_these <- sample(allocs_kept, size = n_sampled_keep)
     # sample allocations received, removing any optouts. Note AID!
-    allocs_received <- results[results$AID == p & (is.na(results$optedOut) | results$optedOut == "false"), "amtGiven"]
+    allocs_received <- results[results$AID == p & (results$optedOut == "false"), "amtGiven"]
     n_max <- length(allocs_received)
     n_sampled_received <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
     receive_these <- sample(allocs_received, size = n_sampled_received)

@@ -16,7 +16,7 @@ build_all_revelations <- function(path, remove_optouts = TRUE) {
 
 
   if (remove_optouts) {
-    res <- res[is.na(res$optedOut) | res$optedOut != "true", ]
+    res <- res[res$optedOut != "true", ]
   }
   
   # Create dir if necessary
