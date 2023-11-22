@@ -29,7 +29,7 @@ build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid =
   ## Build csv
   output = cbind(
     c("RID", "ID", "GID", "AID", "Expected", "Given", "anonymous", "loadTime", "saveTime"),
-    c(NA,    pid,   GID,   aid,  "",         offer,   anon_string,   NA,         NA)
+    c(NA,    pid,   GID,   aid,  "",         offer,   anon_string,   "",         "")
   )
   colnames(output) = c("Variable", "Data")
   write.csv(output, paste0(path, "/", subdir , "/", GID, ".csv"), row.names = FALSE)
