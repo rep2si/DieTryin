@@ -126,11 +126,11 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             gids <- d[, 2] 
             Ngames <- length(gids)
             filename <- paste0(path, "/", subdir, "/GIDsByPID/", id, ".json")
-            content <- paste0("{'Ngames':'",Ngames,"'")
+            content <- paste0('{"Ngames":"',Ngames,'"')
             for (j in seq_len(Ngames)) {
-              content <- paste0(content, ",'GIDx", j, "':'", gids[j],"'")
+              content <- paste0(content, ',"GIDx', j, '":"', gids[j],'"')
             }
-            content <- paste0(content,"}")
+            content <- paste0(content,'}')
             write(content, filename)
           }
         }

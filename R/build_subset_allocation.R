@@ -38,9 +38,9 @@ build_subset_allocation <- function (path, subdir = "SubsetContributions", pid =
   LB = length(output[,1])
   billy = c()
   for(i in 1:(LB-1)){
-    billy = paste0(billy, paste0("'",output[i,1],"':'", output[i,2],"',"))
+    billy = paste0(billy, paste0('"',output[i,1],'":"', output[i,2],'",'))
   }
-  billy = paste0(billy, paste0("'",output[LB,1],"':'", output[LB,2],"'"))
+  billy = paste0(billy, paste0('"',output[LB,1],'":"', output[LB,2],'"'))
   billy = paste0("{",billy,"}")
 
   write(billy, paste0(dir, "/", GID,".json"))
