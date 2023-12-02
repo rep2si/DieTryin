@@ -90,7 +90,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
           all_ds <- list.files(paste0(path, "/", subdir, "/"), pattern = ".csv", full.names = TRUE)
 
           all_gids <- vector("list", length(all_ds))
-          
+
           # populate list with player ids and corresponding game ids
           for (i in seq_len((length(all_ds)))) {
             game <- read.csv(all_ds[i])
@@ -122,7 +122,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
 
           for (i in seq_along(all_ids)) {
             id <- all_ids[i]
-            d <- d_gids[d_gids$id == id, ] 
+            d <- d_gids[d_gids$id == id, ]
             # first randomise order completely
             d <- d[sample(nrow(d)),]
             # then sort by sorter
@@ -143,7 +143,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
               }
               d <- d[order(d$sorter), ] # sort
             }
-            gids <- d[, 2] 
+            gids <- d[, 2]
             Ngames <- length(gids)
             filename <- paste0(path, "/", subdir, "/GIDsByPID/", id, ".json")
             content <- paste0('{"Ngames":"',Ngames,'"')
@@ -152,9 +152,13 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             }
             content <- paste0(content,'}')
             write(content, filename)
-            track_order[[i]] <- c(id = id, order = paste(sorting_order, collapse = ","))
+            if (!sort_by == FALSE) {
+                    track_order[[i]] <- c(id = id, order = paste(sorting_order, collapse = ","))
+            }
           }
-          df_order <- do.call(rbind, track_order)
-          write.csv(df_order, paste0(path, "/", subdir, "/GIDsByPID/", "ORDER.csv"))
+          if (!sort_by == FALSE) {
+                  df_order <- do.call(rbind, track_order)
+                  write.csv(df_order, paste0(path, "/", subdir, "/GIDsByPID/", "ORDER.csv"))
+          }
         }
 }
