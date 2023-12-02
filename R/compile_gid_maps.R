@@ -85,6 +85,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
                 }
         } else if (what == "other") {
 
+
           # I can't be bothered to parse Cody's code, so I'm doing this from scratch.
           all_ds <- list.files(paste0(path, "/", subdir, "/"), pattern = ".csv", full.names = TRUE)
 
@@ -117,6 +118,8 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             all_ids <- sample(all_ids)
           }
 
+          track_order <- vector("list", length(all_ids))
+
           for (i in seq_along(all_ids)) {
             id <- all_ids[i]
             d <- d_gids[d_gids$id == id, ] 
@@ -125,12 +128,15 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             # then sort by sorter
             if (!sort_by == FALSE) {
               if (sort_randomise_levels == "random") {
-                d$sorter <- ordered(d$sorter, levels = sample(sort_levels)) # make ordered factor
+                sorting_order <- sample(sort_levels)
+                d$sorter <- ordered(d$sorter, levels = sorting_order) # make ordered factor
               } else if (sort_randomise_levels == "balance") { ## ONLY WORKS WITH TWO CONDITIONS, FOR NOW
                 if (i < (length(all_ids) / 2)) {
-                  d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
+                  sorting_order <- sort_levels
+                  d$sorter <- ordered(d$sorter, levels = sorting_order) # make ordered factor
                 } else {
-                  d$sorter <- ordered(d$sorter, levels = rev(sort_levels)) # make ordered factor
+                  sorting_order <- rev(sort_levels)
+                  d$sorter <- ordered(d$sorter, levels = sorting_order) # make ordered factor
                 }
               } else {
                 d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
@@ -146,6 +152,9 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             }
             content <- paste0(content,'}')
             write(content, filename)
+            track_order[[i]] <- c(id = id, order = paste(sorting_order, collapse = ","))
           }
+          df_order <- do.call(rbind, track_order)
+          write.csv(df_order, paste0(path, "/", subdir, "/GIDsByPID/", "ORDER.csv"))
         }
 }
