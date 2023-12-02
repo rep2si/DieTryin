@@ -10,7 +10,8 @@ compile_gid_maps(
   mode = "onlyfocal",
   subdir = "SubsetPayouts",
   sort_by = FALSE,
-  sort_order = NA
+  sort_levels = NA,
+  sort_randomise_levels = TRUE
 )
 }
 \arguments{

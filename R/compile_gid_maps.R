@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_order = NA) {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = TRUE) {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -120,7 +120,11 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             d <- d[sample(nrow(d)),]
             # then sort by sorter
             if (!sort_by == FALSE) {
-              d$sorter <- ordered(d$sorter, levels = sort_order) # make ordered factor
+              if (sort_randomise_levels == TRUE) {
+                  d$sorter <- ordered(d$sorter, levels = sample(sort_levels)) # make ordered factor
+                } else {
+                  d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
+              }
               d <- d[order(d$sorter), ] # sort
             }
             gids <- d[, 2] 
