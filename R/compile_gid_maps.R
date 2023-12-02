@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = TRUE) {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = "balance") {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -113,6 +113,10 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
 
           all_ids <- unique(d_gids[, 1])
 
+          if (sort_randomise_levels == "balance") {
+            all_ids <- sample(all_ids)
+          }
+
           for (i in seq_along(all_ids)) {
             id <- all_ids[i]
             d <- d_gids[d_gids$id == id, ] 
@@ -120,10 +124,16 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             d <- d[sample(nrow(d)),]
             # then sort by sorter
             if (!sort_by == FALSE) {
-              if (sort_randomise_levels == TRUE) {
-                  d$sorter <- ordered(d$sorter, levels = sample(sort_levels)) # make ordered factor
-                } else {
+              if (sort_randomise_levels == "random") {
+                d$sorter <- ordered(d$sorter, levels = sample(sort_levels)) # make ordered factor
+              } else if (sort_randomise_levels == "balance") { ## ONLY WORKS WITH TWO CONDITIONS, FOR NOW
+                if (i < (length(all_ids) / 2)) {
                   d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
+                } else {
+                  d$sorter <- ordered(d$sorter, levels = rev(sort_levels)) # make ordered factor
+                }
+              } else {
+                d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
               }
               d <- d[order(d$sorter), ] # sort
             }

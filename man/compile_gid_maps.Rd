@@ -11,7 +11,7 @@ compile_gid_maps(
   subdir = "SubsetPayouts",
   sort_by = FALSE,
   sort_levels = NA,
-  sort_randomise_levels = TRUE
+  sort_randomise_levels = "balance"
 )
 }
 \arguments{
