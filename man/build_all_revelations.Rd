@@ -4,7 +4,7 @@
 \alias{build_all_revelations}
 \title{Build all payout files for DieTryinSR in enhanced mode}
 \usage{
-build_all_revelations(path, remove_optouts = TRUE)
+build_all_revelations(path, remove_optouts = TRUE, gid_size = 4)
 }
 \arguments{
 \item{path}{Path to RICH folder.}
