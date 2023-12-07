@@ -139,6 +139,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
                   d$sorter <- ordered(d$sorter, levels = sorting_order) # make ordered factor
                 }
               } else {
+                sorting_order <- sort_levels
                 d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
               }
               d <- d[order(d$sorter), ] # sort
