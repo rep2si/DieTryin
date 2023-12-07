@@ -24,12 +24,11 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
                                      guess_margin = 0,
                                      guess_payout_amt = 0,
                                      allocations_df = NA) {
-
   dir <- paste0(path, "/SubsetPayouts")
 
   if (!dir.exists(dir)) {
     dir.create(dir)
-    }
+  }
 
   results <- allocations_df
 
@@ -40,46 +39,68 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
   all_payouts <- vector("list", length(all_players))
 
   for (p in seq_along(all_players)) {
-          player <- all_players[[p]]
+    player <- all_players[[p]]
 
-          # sample allocations kept
-          df_allocs_kept <- results[results$ID == player, ]
-          n_max <- nrow(df_allocs_kept)
-          n_sampled_keep <- ifelse(n_max > n_alloc_keep, n_alloc_keep, n_max)
-          df_allocs_kept <- df_allocs_kept[sample(nrow(df_allocs_kept), n_sampled_keep), ]
-          df_allocs_kept$whichPaidOut = "amtKept"
+    # sample allocations kept
+    df_allocs_kept <- results[results$ID == player, ]
+    if (nrow(df_allocs_kept) > 0) {
+      n_max <- nrow(df_allocs_kept)
+      n_sampled_keep <- ifelse(n_max > n_alloc_keep, n_alloc_keep, n_max)
+      df_allocs_kept <- df_allocs_kept[sample(nrow(df_allocs_kept), n_sampled_keep), ]
+      df_allocs_kept$whichPaidOut <- "amtKept"
+    }
 
-          # sample allocations received, removing any optouts. Note AID!
-          df_allocs_received <- results[results$AID == player & (results$optedOut != "true"), ]
-          n_max <- nrow(df_allocs_received)
-          n_sampled_received <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
-          df_allocs_received <- df_allocs_received[sample(nrow(df_allocs_received), n_sampled_received), ]
-          df_allocs_received$whichPaidOut = "amtGiven"
 
-          # dump all the implemented allocations in a df
-          all_payouts[[p]] <- rbind(df_allocs_kept, df_allocs_received)
+    # sample allocations received, removing any optouts. Note AID!
+    df_allocs_received <- results[results$AID == player & (results$optedOut != "true"), ]
+    if (nrow(df_allocs_received) > 0) {
+      n_max <- nrow(df_allocs_received)
+      n_sampled_received <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
+      df_allocs_received <- df_allocs_received[sample(nrow(df_allocs_received), n_sampled_received), ]
+      df_allocs_received$whichPaidOut <- "amtGiven"
+    }
 
-          # calculate total received and given
-          keep_these <- df_allocs_kept$amtKept
-          receive_these <- df_allocs_received$amtGiven
-          tot_kept = sum(keep_these)
-          tot_received = sum(receive_these)
+    # dump all the implemented allocations in a df
+    if (nrow(df_allocs_kept) > 0 & nrow(df_allocs_received) > 0) {
+      all_payouts[[p]] <- rbind(df_allocs_kept, df_allocs_received)
+    } else if (nrow(df_allocs_kept) > 0 & nrow(df_allocs_received) == 0) {
+      all_payouts[[p]] <- rbind(df_allocs_kept)
+    } else if (nrow(df_allocs_received) > 0 & nrow(df_allocs_kept) == 0) {
+      all_payouts[[p]] <- rbind(df_allocs_received)
+    }
 
-          # and build jsons using these
-          build_subset_payout(
-                  path = path,
-                  pid = player,
-                  amt_kept = tot_kept,
-                  amt_received = tot_received,
-                  n_kept = n_sampled_keep,
-                  n_received = n_sampled_received,
-                  guess_margin = guess_margin,
-                  guess_payout_amt = guess_payout_amt
-          )
+    # calculate total received and given
+    if (nrow(df_allocs_kept) > 0) {
+      keep_these <- df_allocs_kept$amtKept
+      tot_kept <- sum(keep_these)
+    } else {
+      tot_kept <- 0
+      n_sampled_keep <- 0
+    }
+
+    if (nrow(df_allocs_received > 0)) {
+      receive_these <- df_allocs_received$amtGiven
+      tot_received <- sum(receive_these)
+    } else {
+      tot_received <- 0
+      n_sampled_received <- 0
+    }
+
+    # and build jsons using these
+    build_subset_payout(
+      path = path,
+      pid = player,
+      amt_kept = tot_kept,
+      amt_received = tot_received,
+      n_kept = n_sampled_keep,
+      n_received = n_sampled_received,
+      guess_margin = guess_margin,
+      guess_payout_amt = guess_payout_amt
+    )
   }
   # Create df of all payouts and write it to csv
   df_all_payouts <- do.call("rbind", all_payouts)
-  write.csv(df_all_payouts, paste0(path, "SubsetPayouts/all_payouts.csv"))
+  write.csv(df_all_payouts, paste0(path, "/SubsetPayouts/all_payouts.csv"))
   message("Json and csv files generated in 'SubsetPayouts'")
   message("CSV file 'all_payouts.csv' also in 'SubsetPayouts'")
 }
