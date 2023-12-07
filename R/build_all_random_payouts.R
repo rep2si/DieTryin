@@ -22,20 +22,8 @@
 build_all_random_payouts <- function(path, n_alloc_keep = 1,
                                      n_alloc_receive = 1,
                                      guess_margin = 0,
-                                     guess_payout_amt = 0) {
-
-  res_file <- paste0(
-    path,
-    "/Results/SubsetContributions-SummaryTable.csv"
-  )
-
-  if (!file.exists(res_file)) {
-    stop(
-      "SubsetContributions-SummaryTable.csv not found.
-       Have you run compile_subset_survey_data()?"
-    )
-  }
-
+                                     guess_payout_amt = 0,
+                                     allocations_df = NA) {
 
   dir <- paste0(path, "/SubsetPayouts")
 
@@ -43,7 +31,7 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
     dir.create(dir)
     }
 
-  results <- read.csv(res_file)
+  results <- allocations_df
 
   all_ids <- results$ID
   all_aids <- results$AID
@@ -62,7 +50,7 @@ build_all_random_payouts <- function(path, n_alloc_keep = 1,
           df_allocs_kept$whichPaidOut = "amtKept"
 
           # sample allocations received, removing any optouts. Note AID!
-          df_allocs_received <- results[results$AID == player & (results$optedOut == "false"), ]
+          df_allocs_received <- results[results$AID == player & (results$optedOut != "true"), ]
           n_max <- nrow(df_allocs_received)
           n_sampled_received <- ifelse(n_max > n_alloc_receive, n_alloc_receive, n_max)
           df_allocs_received <- df_allocs_received[sample(nrow(df_allocs_received), n_sampled_received), ]

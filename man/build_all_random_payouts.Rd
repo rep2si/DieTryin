@@ -9,7 +9,8 @@ build_all_random_payouts(
   n_alloc_keep = 1,
   n_alloc_receive = 1,
   guess_margin = 0,
-  guess_payout_amt = 0
+  guess_payout_amt = 0,
+  allocations_df = NA
 )
 }
 \arguments{
