@@ -4,10 +4,17 @@
 \alias{build_all_revelations}
 \title{Build all payout files for DieTryinSR in enhanced mode}
 \usage{
-build_all_revelations(path, remove_optouts = TRUE, gid_size = 4)
+build_all_revelations(
+  path,
+  remove_optouts = TRUE,
+  gid_size = 4,
+  allocations_df = NA
+)
 }
 \arguments{
 \item{path}{Path to RICH folder.}
+
+\item{allocations_df}{A dataframe with all the allocations that need to be revealed.}
 
 \item{keep_anonymous}{Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.}
 }

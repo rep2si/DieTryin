@@ -4,17 +4,12 @@
 #'
 #' @param path Path to RICH folder.
 #' @param keep_anonymous Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.
+#' @param allocations_df A dataframe with all the allocations that need to be revealed.
 #' @export
 
-build_all_revelations <- function(path, remove_optouts = TRUE, gid_size = 4) {
-  res_file <- paste0(path, "/Results/SubsetContributions-SummaryTable.csv")
+build_all_revelations <- function(path, remove_optouts = TRUE, gid_size = 4, allocations_df = NA) {
 
-  if (!file.exists(res_file)) {
-    stop("SubsetContributions-SummaryTable.csv not found. Have you run compile_subset_survey_data()?")
-  }
-
-  res <- read.csv(res_file)
-
+  res <- allocations_df
 
   if (remove_optouts) {
     res <- res[res$optedOut != "true", ]
