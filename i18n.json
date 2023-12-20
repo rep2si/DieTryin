@@ -8,7 +8,7 @@
   "giveHint": "amount",
   "expectHint": "expected amount",
   "inEdgesPayout": "Incoming allocations implemented",
-  "outEdgesPayout": "Outoing allocations implemented",
+  "outEdgesPayout": "Outgoing allocations implemented",
   "accuracyTested": "Expectations tested for accuracy",
   "accurateExpectations": "Accurate Expectations",
   "totalReceived": "Total received",
@@ -16,5 +16,6 @@
   "totalAccurateExpectations": "Total for accurate expectations",
   "grandTotal": "Grand total",
   "accuracyMarginReminder": "Guesses within the following margin are consindered accurate:",
-  "accuracyRewardReminder": "Each accurate guess is paid:"
+  "accuracyRewardReminder": "Each accurate guess is paid:",
+  "demoAmount": "50"
 }
