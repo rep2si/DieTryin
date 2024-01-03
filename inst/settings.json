@@ -1,4 +1,5 @@
 {
   "bgAnonymous": "#80bad7",
-  "bgRevealed": "#DEB098"
+  "bgRevealed": "#DEB098",
+  "demoAmount": "50"
 }
