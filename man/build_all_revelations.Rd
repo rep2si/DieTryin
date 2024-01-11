@@ -2,22 +2,30 @@
 % Please edit documentation in R/build_all_revelations.R
 \name{build_all_revelations}
 \alias{build_all_revelations}
-\title{Build all payout files for DieTryinSR in enhanced mode}
+\title{Build all revelation files for DieTryinSR in enhanced mode}
 \usage{
 build_all_revelations(
   path,
   remove_optouts = TRUE,
   gid_size = 4,
-  allocations_df = NA
+  allocations_df = NA,
+  likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"),
+  dont_know_text = "dunno"
 )
 }
 \arguments{
 \item{path}{Path to RICH folder.}
 
-\item{allocations_df}{A dataframe with all the allocations that need to be revealed.}
+\item{remove_optouts}{Defaults to TRUE. Removes all allocation decisions in which the allocator opted out. There is most likely no reason to ever set this to FALSE.}
 
-\item{keep_anonymous}{Set to TRUE if you want to generate files for the games that were played in the "anonymous" condition. Defaults to FALSE.}
+\item{gid_size}{Number of terms in hashcodes for the game IDs.}
+
+\item{allocations_df}{The data frame of allocations to use when constructing revelations. See remarks above.}
+
+\item{likert_levels}{a vector of strings, of max length 5, e.g. c("not enough", "enough", "more than enough"). This should contain the levels in the likert scale presented to the participant. Note that the display of this likert scale is optional and can be controlled in settings.json, with the option "likertInRevelations", which can take the following values: "true", "false", "revealedOnly".}
+
+\item{dont_know_text}{A string, displayed as the "don't know" option with the likert scale.}
 }
 \description{
-This is a simple loop that takes game results from an initial set of dicator games (played in "enhanced" mode) and generates files that can be used for the payout functionality in DieTryinSR. This should only be used after the SubsetContributions-SummaryTable.csv file is created, using compile_subset_survey_data().
+This is a simple loop that takes game results from an initial set of dictator games (played in "enhanced" mode) and generates files that can be used for the revelations functionality in DieTryinSR. To construct the data frame passed as "allocation_df", you will most likely want compile SubsetContributions-SummaryTable.csv, using compile_subset_survey_data(), then read this is with read.csv().
 }
