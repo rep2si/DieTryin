@@ -43,6 +43,7 @@ setup_folders = function(path=path, add=NULL){
            }
   
   dir.create(file.path(paste0(path,"/","RICH"),"Results"))
+  dir.create(file.path(paste0(path,"/","RICH"),"apk"))
   
   file.copy(paste0(path.package("DieTryin"),"/","header.txt"), paste0(path,"/","RICH","/","Survey/","header.txt"))
   file.copy(paste0(path.package("DieTryin"),"/","paperandpencil.sty"), paste0(path,"/","RICH","/","Survey/","paperandpencil.sty"))
@@ -50,6 +51,8 @@ setup_folders = function(path=path, add=NULL){
   file.copy(paste0(path.package("DieTryin"),"/","BLANK.jpg"), paste0(path,"/","RICH","/","SubsetContributions/GIDsByPID/","BLANK.jpg"))
   file.copy(paste0(path.package("DieTryin"),"/","i18n.json"), paste0(path,"/","RICH","/","i18n.json"))
   file.copy(paste0(path.package("DieTryin"),"/","settings.json"), paste0(path,"/","RICH","/","settings.json"))
+  file.copy(paste0(path.package("DieTryin"),"/","DieTryinSR-rep2si-v1.1.apk"), paste0(path, "/", "RICH","/", "apk","/", "DieTryinSR-rep2si-v1.1.apk"))
+  file.copy(paste0(path.package("DieTryin"),"/","DieTryinCam-v1.3.apk"), paste0(path, "/", "RICH", "/", "apk", "/", "DieTryinCam-v1.3.apk"))
 
 
 path <<- paste0(path,"/RICH")  
