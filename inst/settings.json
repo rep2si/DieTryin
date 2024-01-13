@@ -2,5 +2,8 @@
   "bgAnonymous": "#80bad7",
   "bgRevealed": "#deb098",
   "demoAmount": "50",
-  "likertInRevelations": "true"
+  "likertInRevelations": "true",
+  "demoRevelations_NLikertLevels": "3",
+  "demoReputation_NQuestions": "2",
+  "demoReputation_NLikertLevels": "4"
 }
