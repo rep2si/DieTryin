@@ -1,6 +1,7 @@
 {
   "bgAnonymous": "#80bad7",
   "bgRevealed": "#deb098",
+  "enableClosedEyes": "false",
   "demoAmount": "50",
   "likertInRevelations": "true",
   "demoRevelations_NLikertLevels": "3",
