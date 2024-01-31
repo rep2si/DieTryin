@@ -1,0 +1,54 @@
+---
+title: "Android_app_settings"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Android_app_settings}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+There are a few display options in the rep2si version of DieTryinSR, the app that is used for data collection. These options are controlled via a file names `settings.json`. This file should be edited and uploaded to the android device alongside other files used in the data collection process.
+
+## Generating an initial settings.json
+
+When preparing the files for the DieTryinSR app, you will initially run `setup_folders()`. Options for this function are described in the package's README file and in the function documentation. This function will create a directory called `RICH`, which contains various files and subdirectories that you will eventually need to transfer to the android device on which you are running DieTryinSR.
+
+This function will also generate a file `RICH/settings.json`, which contains defaults that you can edit.
+
+## Contents of settings.json
+
+The default contents of settings.json are
+
+```{json}
+{
+  "bgAnonymous": "#80bad7",
+  "bgRevealed": "#deb098",
+  "enableClosedEyes": "false",
+  "demoAmount": "50",
+  "likertInRevelations": "true",
+  "demoRevelations_NLikertLevels": "3",
+  "demoReputation_NQuestions": "2",
+  "demoReputation_NLikertLevels": "4"
+}
+```
+
+- `bgAnonymous` and `bgRevealed` control the background colour for allocation screens in the anonymous and revealed conditions, respectively. The defaults are a light blue for anonymous and light orange for revealed.
+
+- `enableClosedEyes` can be set to `"true"` or `"false"`. If it is set to `"true"`, the app will display an alters photograp with closed eyes when in the anonymous condition. This **requires** two photographs per participant in the `RICH/StandaridizedPhotos` subdirectory. For example, for a participant who's ID is "P001", both `P001.jpg` and `P001-closedEyes.jpg` **must** be included. The app will crash if this option is set to true and some photographs are missing.
+
+- `demoAmount` is the amount that should be displayed in the demo screens for the revelations activity. The same amount is displayed in the demo for anonymous and revealed conditions.
+
+- `likertInRevelations` controls whether a likert scale is shown to participants in the revelations activity. This is useful, or example, to ask a participant how fair they find the allocations made to them. Three options can be used here: `"true"`, `"false"`, `"revealedOnly"`. The last of these will only show the likert scale when the allocator made the allocation in the "revealed" condition.
+
+- `demoRevelations_NLikertLevels` and `demoReputation_NLikertLevels` control the number of likert levels shown in the demo screens for the Revelations and Reputation activities respectively. You almost certainly want to use the same number of levels as in the actual activities, as controlled by corresponding `build_subset_...` functions. Note that the _text_ for the likert levels in the demo screens is controlled in the `i18n.json` file.
+
+- `demoReputation_NQuestions` controls the number of questions displayed in the demo screen for reputation activities. You almost certainly want to use the same number of levels as in the actual activities, as controlled by `build_subset_rep_eval()`. Note that the _text_ for the questions in the demo screens is controlled in the `i18n.json` file. Here too, you almost certainly want to use the same text as in the actual activites, as controlled by `build_subset_rep_eval()`. 
+
+**Note** that all the options in settings.json are strings, not booleans or integers. This is a poor design decision which might be fixed in a future version.
