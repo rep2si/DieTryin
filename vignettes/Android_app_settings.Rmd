@@ -30,7 +30,10 @@ The default contents of settings.json are
 {
   "bgAnonymous": "#80bad7",
   "bgRevealed": "#deb098",
-  "enableClosedEyes": "false",
+  "enableClosedEyesAllocs": "false",
+  "enableClosedEyesRepEvals": "false",
+  "enableClosedEyesExpectations": "false",
+  "enableClosedEyesRevelations": "false",
   "demoAmount": "50",
   "likertInRevelations": "true",
   "demoRevelations_NLikertLevels": "3",
@@ -41,7 +44,9 @@ The default contents of settings.json are
 
 - `bgAnonymous` and `bgRevealed` control the background colour for allocation screens in the anonymous and revealed conditions, respectively. The defaults are a light blue for anonymous and light orange for revealed.
 
-- `enableClosedEyes` can be set to `"true"` or `"false"`. If it is set to `"true"`, the app will display an alters photograp with closed eyes when in the anonymous condition. This **requires** two photographs per participant in the `RICH/StandaridizedPhotos` subdirectory. For example, for a participant who's ID is "P001", both `P001.jpg` and `P001-closedEyes.jpg` **must** be included. The app will crash if this option is set to true and some photographs are missing.
+- `enableClosedEyesAllocs` can be set to `"true"` or `"false"`. If it is set to `"true"`, the app will display an alters photograp with closed eyes when in the anonymous condition. This **requires** two photographs per participant in the `RICH/StandaridizedPhotos` subdirectory. For example, for a participant who's ID is "P001", both `P001.jpg` and `P001-closedEyes.jpg` **must** be included. The app will crash if this option is set to true and some photographs are missing.
+
+- `enableClosedEyesRepEvals`, `enableClosedEyesExectations`, `enableClosedEyesRevelations`control the display of closed eyes variants in the reputational evaluations, expectations, and revelations activities respectively.
 
 - `demoAmount` is the amount that should be displayed in the demo screens for the revelations activity. The same amount is displayed in the demo for anonymous and revealed conditions.
 

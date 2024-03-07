@@ -1,10 +1,14 @@
 {
   "bgAnonymous": "#80bad7",
   "bgRevealed": "#deb098",
-  "enableClosedEyes": "false",
+  "enableClosedEyesAllocs": "false",
+  "enableClosedEyesRepEvals": "false",
+  "enableClosedEyesExpectations": "false",
+  "enableClosedEyesRevelations": "false",
   "demoAmount": "50",
   "likertInRevelations": "true",
   "demoRevelations_NLikertLevels": "3",
   "demoReputation_NQuestions": "2",
   "demoReputation_NLikertLevels": "4"
 }
+
