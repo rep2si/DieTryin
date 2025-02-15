@@ -7,7 +7,7 @@
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 #' @export
 
-build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, questions = c("question1", "question2", "question3"), likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"), dont_know_text = "dunno") {
+build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid = NULL,  seed = 123, gid_size = 4, questions = c("question1", "question2", "question3"), likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"), dont_know_text = "dunno", anonymous_alter = "false") {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -21,8 +21,8 @@ build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid 
 
   ## Build csv
   output = cbind(
-    c("RID", "TimeStamp", "ID", "GID", "AID", "Nquestions", "dontKnowText", "NlikertLevels"),
-    c(NA, NA, pid, GID, aid, n, dont_know_text, n_levels)
+    c("RID", "TimeStamp", "ID", "GID", "AID", "Nquestions", "dontKnowText", "NlikertLevels", "anonymousAlter"),
+    c(NA,     NA,         pid,  GID,   aid,   n,             dont_know_text, n_levels,        anonymous_alter)
   )
 
   # add one entry per likert level
@@ -74,4 +74,3 @@ build_subset_rep_eval <- function (path, subdir = "SubsetRep1", pid = NULL, aid 
   write(billy, paste0(dir, "/", GID,".json"))
 
 }
-

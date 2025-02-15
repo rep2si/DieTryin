@@ -65,6 +65,8 @@
   "message_title_setPart": "Participant ID",
   "message_title_wrongPart": "Stop!",
   "message_wrongPart": "Please double check if correct ID is entered. Pay attention to capital letters if any.\n\n If there is no error in the ID you entered, please ask when the participant is available next and talk to the research organisers.\n\n DO NOT CONTINUE WITH THIS PARTICIPANT NOW.",
+  "message_title_giverAnon": "Giver did not know receiver ID",
+  "message_giverAnon": "The next allocation was made by a giver who did not know the receiver's ID.",
   "ok": "Ok",
   "payout_accuracyMarginReminder": "Guesses within the following margin are consindered accurate",
   "payout_accuracyRewardReminder": "Each accurate guess is paid",

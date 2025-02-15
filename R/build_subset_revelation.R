@@ -9,7 +9,7 @@
 #' @export
 
 
-build_subset_revelation <- function (path, subdir = "SubsetRevelations", pid = NULL, aid = NULL, offer = NA, likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"), dont_know_text = "dunno", anonymous = FALSE, seed = 123, gid_size = 4) {
+build_subset_revelation <- function (path, subdir = "SubsetRevelations", pid = NULL, aid = NULL, offer = NA, likert_levels = c("Nope", "Meh", "Kinda", "Yeah", "Mega"), dont_know_text = "dunno", anonymous = FALSE, anonymous_alter = FALSE, seed = 123, gid_size = 4) {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -26,13 +26,14 @@ build_subset_revelation <- function (path, subdir = "SubsetRevelations", pid = N
     }
 
   anon_string <- ifelse(anonymous, "true", "false")
+  anon_alter_string <- ifelse(anonymous_alter, "true", "false")
 
   n_levels <- length(likert_levels)
 
   ## Build csv
   output = cbind(
-    c("RID", "ID", "GID", "AID", "Given", "anonymous", "allocEval", "NlikertLevels", "dontKnowText"),
-    c(NA,    pid,   GID,   aid,   offer,   anon_string, "",          n_levels,       dont_know_text)
+    c("RID", "ID", "GID", "AID", "Given", "anonymous", "anonymousAlter",   "allocEval", "NlikertLevels", "dontKnowText"),
+    c("",    pid,   GID,   aid,   offer,   anon_string, anon_alter_string,  "",          n_levels,       dont_know_text)
   )
 
   ll <- cbind(

@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = "false") {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = "false", anon_alter_first = TRUE) {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -85,7 +85,6 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
                 }
         } else if (what == "other") {
 
-
           # I can't be bothered to parse Cody's code, so I'm doing this from scratch.
           all_ds <- list.files(paste0(path, "/", subdir, "/"), pattern = ".csv", full.names = TRUE)
 
@@ -96,12 +95,21 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
             game <- read.csv(all_ds[i])
             id <- game[which(game[, 1] %in% "ID"), 2]
             gid <- game[which(game[, 1] %in% "GID"), 2]
+            anon_alter <- game[which(game[, 1] %in% "anonymousAlter"), 2] 
+            # base data frame: id, gid
+            all_gids[[i]] <- data.frame(id, gid, anon_alter)         
             if (!sort_by == FALSE) {
-                    sorter <- game[which(game[, 1] %in% sort_by), 2]
-                    all_gids[[i]] <- data.frame(id, gid, sorter)
-            } else {
-                    all_gids[[i]] <- data.frame(id, gid)
+                    # add sorter
+                    all_gids[[i]]$sorter <- game[which(game[, 1] %in% sort_by), 2] # add sorter
             }
+              
+            
+          #   if (!sort_by == FALSE) {
+          #           sorter <- game[which(game[, 1] %in% sort_by), 2]
+          #           all_gids[[i]] <- data.frame(id, gid, sorter) # data frame: id, gid, sorter
+          #   } else {
+          #           all_gids[[i]] <- data.frame(id, gid)         # data frame: id, gid
+          #   }
           }
 
           # crunch me good
@@ -122,7 +130,8 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
 
           for (i in seq_along(all_ids)) {
             id <- all_ids[i]
-            d <- d_gids[d_gids$id == id, ]
+            # df of gids for this id
+            d <- d_gids[d_gids$id == id, ] 
             # first randomise order completely
             d <- d[sample(nrow(d)),]
             # then sort by sorter
@@ -142,7 +151,12 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
                 sorting_order <- sort_levels
                 d$sorter <- ordered(d$sorter, levels = sort_levels) # make ordered factor
               }
+              if (anon_alter_first) {
+                d$anon_alter <- ordered(d$anon_alter, levels = c("true", "false")) # make ordered factor
+                d <- d[order(d$sorter, d$anon_alter), ] # sort
+              } else {
               d <- d[order(d$sorter), ] # sort
+              }
             }
             gids <- d[, 2]
             Ngames <- length(gids)

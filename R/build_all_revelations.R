@@ -30,6 +30,7 @@ build_all_revelations <- function(path, remove_optouts = TRUE, gid_size = 4, all
     giver <- res[r, "ID"]
     amount_offered <- res[r, "amtGiven"]
     anonymous <- ifelse(res[r, "Condition"] == "anonymous", TRUE, FALSE)
-    build_subset_revelation(path = path, subdir = "SubsetRevelations", pid = receiver, aid = giver, offer = amount_offered, anonymous = anonymous, likert_levels = likert_levels, dont_know_text = dont_know_text , gid_size = gid_size)
+    anonymous_alter <- ifelse(res[r, "anonymousAlter"] == "true", TRUE, FALSE)
+    build_subset_revelation(path = path, subdir = "SubsetRevelations", pid = receiver, aid = giver, offer = amount_offered, anonymous = anonymous, anonymous_alter = anonymous_alter , likert_levels = likert_levels, dont_know_text = dont_know_text , gid_size = gid_size)
   }
 }
