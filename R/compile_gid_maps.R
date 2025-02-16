@@ -8,7 +8,7 @@
 #' can give to anyone on the roster, set to "fullset".
 #' @export
 #'
-compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = "false", anon_alter_first = TRUE) {
+compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", subdir = "SubsetPayouts", sort_by = FALSE, sort_levels = NA, sort_randomise_levels = "false", anon_alter_first = FALSE, anon_alter_midway = FALSE) {
         if (what == "contributions") {
                 ################################### PGG style
                 if (mode == "onlyfocal") {
@@ -102,14 +102,6 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
                     # add sorter
                     all_gids[[i]]$sorter <- game[which(game[, 1] %in% sort_by), 2] # add sorter
             }
-              
-            
-          #   if (!sort_by == FALSE) {
-          #           sorter <- game[which(game[, 1] %in% sort_by), 2]
-          #           all_gids[[i]] <- data.frame(id, gid, sorter) # data frame: id, gid, sorter
-          #   } else {
-          #           all_gids[[i]] <- data.frame(id, gid)         # data frame: id, gid
-          #   }
           }
 
           # crunch me good
@@ -154,6 +146,28 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
               if (anon_alter_first) {
                 d$anon_alter <- ordered(d$anon_alter, levels = c("true", "false")) # make ordered factor
                 d <- d[order(d$sorter, d$anon_alter), ] # sort
+              } else if (anon_alter_midway) {
+                #subset two dfs, both ordered by "sorter"
+                d_anon_alter <- d[d$anon_alter == "true",]
+                d_anon_alter <- d_anon_alter[order(d_anon_alter$sorter), ] # sort
+                d_known_alter <- d[d$anon_alter == "false",]
+                d_known_alter <- d_known_alter[order(d_known_alter$sorter), ] # sort
+                n_known_per_sorter_level <- nrow(d_known_alter) / length(sort_levels)
+                # Only implementing for 2 sort_levels for now
+                h <- floor(n_known_per_sorter_level / 2)
+                t <- n_known_per_sorter_level - h
+                l <- list()
+                start <- 1
+                for(j in seq_along(sort_levels)) {
+                  #It's 1.30am in the field. This works with two sorter levels but is untested with more
+                  start <- start + (j - 1) * ((n_known_per_sorter_level + nrow(d_anon_alter) / 2) - 1)
+                  l[[j]] <- rbind(
+                    d_known_alter[start:(start+h-1),],
+                    d_anon_alter[j,], # will only work for one unknown alter per condition 
+                    d_known_alter[(start+h):(start+h+t-1),]
+                  )
+                }
+                d <- do.call(rbind,l)
               } else {
               d <- d[order(d$sorter), ] # sort
               }
@@ -174,6 +188,7 @@ compile_gid_maps = function(path, what = "contributions", mode = "onlyfocal", su
           if (!sort_by == FALSE) {
                   df_order <- do.call(rbind, track_order)
                   write.csv(df_order, paste0(path, "/", subdir, "/GIDsByPID/", "ORDER.csv"))
+                  }
           }
         }
-}
+
