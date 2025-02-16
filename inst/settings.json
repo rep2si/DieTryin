@@ -1,6 +1,7 @@
 {
   "bgAnonymous": "#80bad7",
   "bgRevealed": "#deb098",
+  "bgAnonAlter": "#0ccd00",
   "enableClosedEyesAllocs": "false",
   "enableClosedEyesRepEvals": "false",
   "enableClosedEyesExpectations": "false",
