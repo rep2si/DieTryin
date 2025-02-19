@@ -51,7 +51,7 @@ setup_folders = function(path=path, add=NULL){
   file.copy(paste0(path.package("DieTryin"),"/","BLANK.jpg"), paste0(path,"/","RICH","/","SubsetContributions/GIDsByPID/","BLANK.jpg"))
   file.copy(paste0(path.package("DieTryin"),"/","i18n.json"), paste0(path,"/","RICH","/","i18n.json"))
   file.copy(paste0(path.package("DieTryin"),"/","settings.json"), paste0(path,"/","RICH","/","settings.json"))
-  file.copy(paste0(path.package("DieTryin"),"/","DieTryinSR-rep2si-v1.2.2.apk"), paste0(path, "/", "RICH","/", "apk","/", "DieTryinSR-rep2si-v1.2.2.apk"))
+  file.copy(paste0(path.package("DieTryin"),"/","DieTryinSR-rep2si-v1.3.1.apk"), paste0(path, "/", "RICH","/", "apk","/", "DieTryinSR-rep2si-v1.2.2.apk"))
   file.copy(paste0(path.package("DieTryin"),"/","DieTryinCam-v1.3.apk"), paste0(path, "/", "RICH", "/", "apk", "/", "DieTryinCam-v1.3.apk"))
 
 
