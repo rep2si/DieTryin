@@ -8,7 +8,7 @@
 #' @param gid_size Number of terms in hashcodes for the game IDs.
 #' @export
 
-build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, anonymous = FALSE, seed = 123, gid_size = 4) {
+build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid = NULL, aid = NULL, offer = NA, anonymous = FALSE, seed = 123, gid_size = 4, anonymous_alter = FALSE) {
 
   # # Set random number generator seed to make repeatable game IDS
   # if(!is.na(seed)){
@@ -25,11 +25,12 @@ build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid =
     }
 
   anon_string <- ifelse(anonymous, "true", "false")
+  anon_alter_string <- ifelse(anonymous_alter, "true", "false")
 
   ## Build csv
   output = cbind(
-    c("RID", "ID", "GID", "AID", "Expected", "Given", "anonymous", "loadTime", "saveTime"),
-    c(NA,    pid,   GID,   aid,  "",         offer,   anon_string,   "",         "")
+    c("RID", "ID", "GID", "AID", "Expected", "Given", "anonymous", "anonymousAlter",  "loadTime", "saveTime"),
+    c(NA,    pid,   GID,   aid,  "",         offer,   anon_string, anon_alter_string, "",         "")
   )
   colnames(output) = c("Variable", "Data")
   write.csv(output, paste0(path, "/", subdir , "/", GID, ".csv"), row.names = FALSE)
@@ -46,4 +47,3 @@ build_subset_expectation <- function (path, subdir = "SubsetExpectations", pid =
   write(billy, paste0(path, "/", subdir , "/",  GID,".json"))
 
 }
-
